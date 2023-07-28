@@ -17,6 +17,13 @@ def draw_player(player_pos, screen):
     py.draw.rect(screen, "black", py.Rect(player_pos, (20, 100)))
 
 
+def draw_divider(screen):
+    temp_pos = py.Vector2(screen.get_width() / 2, 0)
+    for i in range(10):
+        py.draw.rect(screen, "black", py.Rect(temp_pos, (10, 50)))
+        temp_pos.y += 100
+
+
 def main():
     py.init()
     screen = py.display.set_mode((1280, 720))
@@ -37,6 +44,7 @@ def main():
         draw_player(player_one_pos, screen)
         draw_player(player_two_pos, screen)
         player_movement(player_one_pos, player_two_pos, dt)
+        draw_divider(screen)
 
         py.display.flip()
 
