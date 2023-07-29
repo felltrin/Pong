@@ -24,6 +24,14 @@ def draw_divider(screen):
         temp_pos.y += 100
 
 
+def draw_score(my_font, screen):
+    player_one_num, player_two_num = 0, 0
+    player_one_score = my_font.render(str(player_one_num), 1, "black")
+    player_two_score = my_font.render(str(player_two_num), 1, "black")
+    screen.blit(player_one_score, (screen.get_width() / 4, 30))
+    screen.blit(player_two_score, ((screen.get_width() / 4) * 3, 30))
+
+
 def main():
     py.init()
     screen = py.display.set_mode((1280, 720))
@@ -31,8 +39,9 @@ def main():
     running = True
     dt = 0
 
-    player_one_pos = py.Vector2(75, screen.get_height() / 2)
-    player_two_pos = py.Vector2(1200, screen.get_height() / 2)
+    my_font = py.font.SysFont("Sans Serif", 108)
+    player_one_pos = py.Vector2(40, screen.get_height() / 2)
+    player_two_pos = py.Vector2(1230, screen.get_height() / 2)
 
     while running:
         for event in py.event.get():
@@ -41,6 +50,7 @@ def main():
 
         screen.fill("green")
 
+        draw_score(my_font, screen)
         draw_player(player_one_pos, screen)
         draw_player(player_two_pos, screen)
         player_movement(player_one_pos, player_two_pos, dt)
