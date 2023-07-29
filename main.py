@@ -1,6 +1,11 @@
 import pygame as py
 
 
+def ball_movement():
+    py.draw.rect(screen, "black", py.Rect(ball_pos, (20, 20)))
+    ball_pos.x += 5
+
+
 def player_movement(player_one_pos, player_two_pos, dt):
     keys = py.key.get_pressed()
     if keys[py.K_w]:
@@ -30,15 +35,12 @@ def draw_player(player_pos, screen):
 
 def draw_divider(screen):
     temp_pos = py.Vector2(screen.get_width() / 2, 0)
-    for i in range(10):
-        py.draw.rect(screen, "black", py.Rect(temp_pos, (10, 50)))
-        temp_pos.y += 100
+    for i in range(15):
+        py.draw.rect(screen, "black", py.Rect(temp_pos, (20, 20)))
+        temp_pos.y += 50
 
 
-def draw_score(my_font, screen):
-    player_one_num, player_two_num = 0, 0
-    player_one_score = my_font.render(str(player_one_num), 1, "black")
-    player_two_score = my_font.render(str(player_two_num), 1, "black")
+def draw_score(screen):
     screen.blit(player_one_score, (screen.get_width() / 4, 30))
     screen.blit(player_two_score, ((screen.get_width() / 4) * 3, 30))
 
@@ -53,6 +55,11 @@ if __name__ == '__main__':
     my_font = py.font.SysFont("Sans Serif", 108)
     player_one_pos = py.Vector2(30, screen.get_height() / 2)
     player_two_pos = py.Vector2(1230, screen.get_height() / 2)
+    ball_pos = py.Vector2(screen.get_width() / 2, 0)
+
+    player_one_num, player_two_num = 0, 0
+    player_one_score = my_font.render(str(player_one_num), 1, "black")
+    player_two_score = my_font.render(str(player_two_num), 1, "black")
 
     while running:
         for event in py.event.get():
@@ -61,12 +68,13 @@ if __name__ == '__main__':
 
         screen.fill("green")
 
-        draw_score(my_font, screen)
+        draw_score(screen)
         player_one_rect = draw_player(player_one_pos, screen)
         player_two_rect = draw_player(player_two_pos, screen)
         player_movement(player_one_pos, player_two_pos, dt)
         player_constraint(player_one_pos, player_two_pos)
         draw_divider(screen)
+        ball_movement()
 
         py.display.flip()
 
